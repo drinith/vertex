@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import chain, combinations
 import networkx as nx
 
@@ -43,13 +44,13 @@ class Vertex:
 
     #https://www.geeksforgeeks.org/vertex-cover-problem-set-1-introduction-approximate-algorithm-2/
     # The function to print vertex cover
-    def printVertexCover(self):
+    def printVertexCover(self,V, dict_graph):
          
         # Initialize all vertices as not visited.
-        visited = [False] * (self.V)
+        visited = [False] * (len(V))
          
         # Consider all edges one by one
-        for u in range(self.V):
+        for u in range(len(V)):
              
             # An edge is only picked when
             # both visited[u] and visited[v]
@@ -60,7 +61,7 @@ class Vertex:
                 # pick the first not yet visited
                 # vertex (We are basically picking
                 # an edge (u, v) from remaining edges.
-                for v in self.graph[u]:
+                for v in dict_graph[u]:
                     if not visited[v]:
                          
                         # Add the vertices (u, v) to the
@@ -73,12 +74,21 @@ class Vertex:
                         break
  
         # Print the vertex cover
-        for j in range(self.V):
+        for j in range(len(V)):
             if visited[j]:
                 print(j, end = ' ')
                  
-        print()
+       
 
+    def change_graph_to_dict(self,edges):
+
+        #Dictonary to store graph
+        dict_graph = defaultdict(list)
+
+        for edge in edges:
+            dict_graph[edge[0]].append(edge[1]) 
+
+        return dict_graph
 
 if __name__=='__main__':
 
@@ -99,13 +109,20 @@ if __name__=='__main__':
         print(subset)
 
     K = 2
-for subset in v.subsets(nodes, K):
-    print(subset)
+    
+    for subset in v.subsets(nodes, K):
+        print(subset)
 
 
-K = 3
-for subset in v.subsets(nodes, K):
-    print(f'subset tested: {subset}')
-    if v.is_vertex_cover_brute_force(edges, subset):
-        print(f'Subset {subset} is a vertex cover')
-        break
+    K = 3
+    for subset in v.subsets(nodes, K):
+        print(f'subset tested: {subset}')
+        if v.is_vertex_cover_brute_force(edges, subset):
+            print(f'Subset {subset} is a vertex cover')
+            break
+
+    #Change edges in graph dictonary 
+    dict_graph = v.change_graph_to_dict(edges)
+    print('teste')
+
+    v.printVertexCover(edges,dict_graph)
