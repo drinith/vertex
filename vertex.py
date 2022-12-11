@@ -141,13 +141,13 @@ if __name__=='__main__':
         print(subset)
 
     K = 2
-for subset in v.subsets(nodes, K):
-    print(subset)
+    for subset in v.subsets(nodes, K):
+        print(subset)
 
 
-K = 3
-for subset in v.subsets(nodes, K):
-    print(f'subset tested: {subset}')
-    if v.is_vertex_cover_brute_force(edges, subset):
-        print(f'Subset {subset} is a vertex cover')
-        break
+    K = 3
+    for subset in v.subsets(nodes, K):
+        print(f'subset tested: {subset}')
+        if v.is_vertex_cover_brute_force(edges, subset):
+            print(f'Subset {subset} is a vertex cover')
+            break
